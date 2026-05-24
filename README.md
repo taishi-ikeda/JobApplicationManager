@@ -1,2 +1,3 @@
 # JobApplicationManager
-GUI for job application management
+This project is licensed under the MIT License.
+This application uses the Qt framework, which is licensed under the LGPL (v3).
