@@ -53,6 +53,11 @@ namespace application_gui {
             dataBtnLayout->addWidget(btnOverride_);
             mainLayout->addWidget(dataBtnGroupBox);
 
+            btnHidePastApp = new QPushButton("過去の公募を非表示", this);
+            mainLayout->addWidget(btnHidePastApp);
+            btnHidePastApp->setCheckable(true);
+            btnHidePastApp->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
             selectedDataFile_ = new QLabel("保存先データ：未選択", this);
             mainLayout->addWidget(selectedDataFile_);
 
@@ -69,7 +74,7 @@ namespace application_gui {
             //tableWidget_->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
             //tableWidget_->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
             mainLayout->addWidget(tableWidget_);
-    
+
             // 初期データの投入
             //this->insertSampleData();
             this->updateTableWidget();
@@ -78,7 +83,7 @@ namespace application_gui {
             connect(btnLoad_, &QPushButton::clicked, this, &JobApplicationTracker::onLoadButtonClicked);
             connect(btnSave_, &QPushButton::clicked, this, &JobApplicationTracker::onSaveButtonClicked);
             connect(btnOverride_, &QPushButton::clicked, this, &JobApplicationTracker::onOverideButtonClicked); // 上書き保存も同じ処理でOK
-  
+            connect(btnHidePastApp, &QPushButton::toggled, this, &JobApplicationTracker::onHidePastApplicationsToggled);
             resize(1600, 800);
         }
   
@@ -88,6 +93,7 @@ namespace application_gui {
         QPushButton *btnSave_;
         QPushButton *btnOverride_;
         QPushButton *btnform_;
+        QPushButton *btnHidePastApp;
         QLabel *selectedDataFile_;
         QString selectedDataFilePath_;
 
@@ -134,6 +140,27 @@ namespace application_gui {
               addApplicationData(app);
             }
           }
+        }
+
+        void onHidePastApplicationsToggled(bool checked) {
+            // 過去の公募を非表示にする処理を実装
+            if (checked) {
+                // 過去の公募を非表示にする
+                for (int i = 0; i < tableWidget_->rowCount(); ++i) {
+                    QTableWidgetItem* item = tableWidget_->item(i, 1); // 締切日列を取得
+                    if (item) {
+                        QDate deadline = QDate::fromString(item->text(), "yyyy-MM-dd");
+                        if (deadline < QDate::currentDate()) {
+                            tableWidget_->hideRow(i);
+                        }
+                    }
+                }
+            } else {
+                // すべての行を表示する
+                for (int i = 0; i < tableWidget_->rowCount(); ++i) {
+                    tableWidget_->showRow(i);
+                }
+            }
         }
 
       // テーブルに公募データを追加する関数
@@ -293,40 +320,6 @@ namespace application_gui {
               }
           }
       }
-  
-      // ボタンが押された時の処理
-      /*void onAddButtonClicked() {
-        QString inst = editInstitution->text().trimmed();
-        if (inst.isEmpty()) {
-            QMessageBox::warning(this, "入力エラー", "応募先を入力してください。");
-            return;
-        }
-  
-        const QUrl url(editUrl->text().trimmed());
-        if (!url.isEmpty() && !url.isValid()) {
-            QMessageBox::warning(this, "入力エラー", "URLの形式が正しくありません。");
-            return;
-        }
-        const QDir dir(editDirectory->text().trimmed());
-        if (!dir.path().isEmpty() && !dir.exists()) {
-            QMessageBox::warning(this, "入力エラー", "指定されたフォルダが存在しません。");
-            return;
-        }
-
-        database::application app(inst.toStdString(),
-                                  dateEditDeadline->date().year(),
-                                  dateEditDeadline->date().month(),
-                                  dateEditDeadline->date().day(),
-                                  database::application::submit::electric,
-                                  url,
-                                  dir);
-
-        addApplicationData(app);
-          
-        // 入力欄をクリア
-        editInstitution->clear();
-        dateEditDeadline->setDate(QDate::currentDate());
-      }*/
 
       void onLoadButtonClicked() {
           // データをファイルから読み込む処理を実装
