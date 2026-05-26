@@ -262,6 +262,8 @@ namespace application_gui
                         { this->updateProgress(row); });
             }
             tableWidget_->setCellWidget(row, 3, scrollWidget);
+            tableWidget_->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+            tableWidget_->resizeColumnToContents(3);
 
             // 4. フォルダを開くボタン
             auto *btnOpenFolder = new QPushButton("開く", this);

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      border-bottom: 2px solid #333;
+      padding-bottom: 10px;
+    }
+
+    .step {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+  <title>公募管理ツール（JobApplicationManager） </title>
+</head>
+
+<body>
+  <h1>公募管理ツール 使い方ガイド</h1>
+  <p>このツールは、Qtを使用して開発された大学教員公募の締切や提出書類を一元管理するためのGUIです。それぞれの公募の情報を入力し、締切日や必要書類、進捗状況を簡単に確認・管理できます。
+  </p>
+  <p>
+    ソースコードは<a href="https://github.com/taishi-ikeda/JobApplicationManager">リポジトリ</a>で公開しています。
+  </p>
+
+  <p>
+    主な機能は以下の通りです：
+  <ul>
+    <li>公募の追加・編集・削除</li>
+    <li>締切日や必要書類の管理</li>
+    <li>進捗状況の更新</li>
+    <li>データの保存と読み込み</li>
+  </ul>
+  </p>
+
+  <h2>メイン画面の説明</h2>
+  <p>
+    メイン画面では、登録された公募の一覧が表示されます。
+    <img src="img/MainWindowWithMark.png" alt="メイン画面">
+  </p>
+  <p>
+    ①
+    公募の追加・データの読み込み・保存・上書きができるボタン。公募の追加ボタンを押すと、入力ダイアログが表示されます。データの読み込み・保存・上書きボタンは、現在のデータをファイルに保存したり、保存されたデータを読み込んだりするためのものです。データはJSON形式で保存されます。
+  </p>
+  <p>
+    ② 締切が過去の公募を非表示にするためのボタン
+  </p>
+  <p>
+    ③ 上書き保存先のファイル名（データの読み込み下または保存先が表示されます）
+  </p>
+  <p>
+    ④公募の締切日、必要書類、フォルダを開くボタン、URLを開くボタン、進捗率などの情報が表示されるテーブル。必要書類で準備が完了したものはチェックを入れることで進捗率が更新されます。
+  <h2>公募情報の入力ダイアログの説明</h2>
+  <p>
+    公募情報の入力ダイアログでは、公募名、締切日、必要提出書類、URL、備考などの情報を入力できます。
+    <img src="img/fromDialogWithMark.png" alt="入力ダイアログ">
+  </p>
+  <p>
+    ① 公募名を入力するテキストフィールド
+  </p>
+  <p>
+    ② 締切日の入力と提出方法の選択
+  </p>
+  <p>
+    ③ 公募の提出物を管理するためのフォルダ選択と公募のURL入力
+  </p>
+  <p>
+    ④ 提出書類の登録
+  </p>
+  <p>
+    ⑤備考欄（例: 連絡先や必要書類など）を入力するテキストエリア
+  </p>
+  <p>
+    ⑥ 追加・編集を確定するためのボタン
+  </p>
+</body>
+
+</html>
